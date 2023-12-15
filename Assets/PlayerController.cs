@@ -149,6 +149,7 @@ public class PlayerController : MonoBehaviour
             {
                 lr.positionCount = 0;
                 canFire = false;
+                readying = false;
                 Fire();
             }
         }
