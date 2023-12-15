@@ -47,6 +47,8 @@ public class TeleporterController : MonoBehaviour
         //if (collision.collider.tag != "player")
         //collision.contacts[0].normal;
 
+        if (collision.collider.CompareTag("GravityCollider")) return;
+
         if (collision.collider.CompareTag("KillPlane"))
         {
             player.StartCooldown();

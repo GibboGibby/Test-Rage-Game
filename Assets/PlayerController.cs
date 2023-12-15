@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private int lineSteps;
 
+    [SerializeField] private GameObject debugTeleportPos;
+
     private bool canFire = true;
     //[SerializeField] private bool shotCooldown = false;
     [SerializeField] private float cooldownTime = 0.0f;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
         if (sr == null) sr = GetComponent<SpriteRenderer>();
         if (lr == null) lr = GetComponent<LineRenderer>();
 
+        if (debugTeleportPos == null) debugTeleportPos = GameObject.Find("DebugTeleporter");
 
         lr.positionCount = 0;
     }
@@ -99,6 +102,23 @@ public class PlayerController : MonoBehaviour
         canFire = _canFire;
     }
 
+    private void UpdateBounce()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                bounces--;
+                if (bounces < minBounces) bounces = maxBounces;
+            }
+            else
+            {
+                bounces++;
+                if (bounces > maxBounces) bounces = minBounces;
+            }
+            //Debug.Log("Bounces - " + bounces);
+        }
+    }
     private void Shooting()
     {
         if (!canFire) return;
@@ -112,12 +132,7 @@ public class PlayerController : MonoBehaviour
             lr.positionCount = 0;
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            bounces++;
-            if (bounces > maxBounces) bounces = minBounces;
-            //Debug.Log("Bounces - " + bounces);
-        }
+        
 
 
         if (Input.GetMouseButton(0))
@@ -159,8 +174,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Movement();
+        UpdateBounce();
         Shooting();
         uiController.UpdateUI(bounces);
+
+        if (Input.GetKeyDown(KeyCode.T)) transform.position = debugTeleportPos.transform.position;
     }
 
     Vector2 PointPosition(float t, Vector2 dir)
