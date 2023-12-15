@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+        if (readying) return;
         if (Input.GetKey(KeyCode.D))
         {
             //rb.AddForce(transform.right * moveSpeed, ForceMode2D.Force);
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             readying = false;
+            lr.positionCount = 0;
         }
 
         if (Input.GetMouseButtonDown(1))
