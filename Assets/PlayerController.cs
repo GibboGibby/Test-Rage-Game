@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxBounces;
     [SerializeField] private int minBounces;
 
+    [SerializeField] private ExtraCamController ecc;
+
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private LineRenderer lr;
 
