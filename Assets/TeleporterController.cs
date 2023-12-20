@@ -10,6 +10,9 @@ public class TeleporterController : MonoBehaviour
     [SerializeField] private float power;
     [SerializeField] private Rigidbody2D rb;
     private ExtraCamController extraCamController;
+    [SerializeField] private float timeToReturnToNormalGravity = 3f;
+    private float elapsedTime = 0;
+    bool counting = false;
 
     private int bounces;
     void Awake()
@@ -22,7 +25,16 @@ public class TeleporterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (counting)
+        {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= timeToReturnToNormalGravity)
+            {
+                elapsedTime = 0;
+                rb.gravityScale = 1;
+                counting = false;
+            }
+        }
     }
 
     public void SetBounces(int b)
@@ -45,12 +57,30 @@ public class TeleporterController : MonoBehaviour
         rb.AddForce(normalisedDir * power, ForceMode2D.Impulse);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("NegativeGravity")) rb.gravityScale = -1;
+        if (collision.gameObject.CompareTag("NoGravity"))
+        {
+            Debug.Log("Touching no grav");
+            rb.gravityScale = 0;
+        }
+        if (collision.gameObject.CompareTag("PositiveGravity")) rb.gravityScale = 1;
+
+        if (rb.gravityScale == 0 || rb.gravityScale == -1)
+        {
+            elapsedTime = 0;
+            counting = true;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //if (collision.collider.tag != "player")
         //collision.contacts[0].normal;
 
         if (collision.collider.CompareTag("GravityCollider")) return;
+        
 
         if (collision.collider.CompareTag("KillPlane"))
         {
