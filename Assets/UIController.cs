@@ -29,7 +29,8 @@ public class UIController : MonoBehaviour
         {
             if (i < elementsToShow)
                 middleBits[i].SetActive(true);
-            else                  middleBits[i].SetActive(false);
+            else                  
+                middleBits[i].SetActive(false);
         }
     }
 }

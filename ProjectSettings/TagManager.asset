@@ -10,6 +10,7 @@ TagManager:
   - NegativeGravity
   - NoGravity
   - PositiveGravity
+  - ExtraBounce
   layers:
   - Default
   - TransparentFX

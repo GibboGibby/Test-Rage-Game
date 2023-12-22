@@ -9,10 +9,12 @@ public class TeleporterController : MonoBehaviour
     private PlayerController player;
     [SerializeField] private float power;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float bounceMultiplier = 2;
     private ExtraCamController extraCamController;
     [SerializeField] private float timeToReturnToNormalGravity = 3f;
     private float elapsedTime = 0;
     bool counting = false;
+    
 
     private int bounces;
     void Awake()
@@ -67,6 +69,12 @@ public class TeleporterController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("PositiveGravity")) rb.gravityScale = 1;
 
+        counting = false;
+        elapsedTime = 0;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
         if (rb.gravityScale == 0 || rb.gravityScale == -1)
         {
             elapsedTime = 0;
@@ -87,6 +95,10 @@ public class TeleporterController : MonoBehaviour
             player.StartCooldown();
             Destroy(this.gameObject);
             return;
+        }
+        if (collision.collider.CompareTag("ExtraBounce"))
+        {
+            rb.velocity *= bounceMultiplier;
         }
 
         if (bounces == 0)

@@ -117,6 +117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 10
   rb: {fileID: 4553910307464824266}
+  bounceMultiplier: 1.25
+  timeToReturnToNormalGravity: 1
 --- !u!50 &4553910307464824266
 Rigidbody2D:
   serializedVersion: 4
