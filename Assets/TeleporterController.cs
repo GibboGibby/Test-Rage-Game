@@ -20,8 +20,8 @@ public class TeleporterController : MonoBehaviour
     void Awake()
     {
         //rb = GetComponent<Rigidbody2D>();
-        extraCamController = GameObject.Find("Extra Cam").GetComponent<ExtraCamController>();
-        extraCamController.SetTeleporter(gameObject);
+        //extraCamController = GameObject.Find("Extra Cam").GetComponent<ExtraCamController>();
+        //extraCamController.SetTeleporter(gameObject);
     }
 
     // Update is called once per frame
@@ -106,7 +106,7 @@ public class TeleporterController : MonoBehaviour
             player.Teleport(collision.contacts[0].point, collision.contacts[0].normal);
             //player.CanFire(true);
             player.StartCooldown();
-            extraCamController.UnsetTeleporter();
+            //extraCamController.UnsetTeleporter();
             Destroy(this.gameObject);
         }
             
