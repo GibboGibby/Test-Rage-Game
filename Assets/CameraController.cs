@@ -19,7 +19,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float camSizeMin;
     [SerializeField] private float camSizeMax;
 
-    bool shouldClamp = false;
+    [SerializeField] bool shouldClamp = false;
+    [SerializeField] bool canScroll = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +53,7 @@ public class CameraController : MonoBehaviour
 
     void CamZoom()
     {
+        if (!canScroll) return;
         if (Input.mouseScrollDelta.y != 0)
         {
             cam.orthographicSize -= Input.mouseScrollDelta.y;
