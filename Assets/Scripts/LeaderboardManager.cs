@@ -32,9 +32,21 @@ public class LeaderboardManager : MonoBehaviour
         }));
     }
 
+    public void UpdateLeaderboardItems(UILeaderboardCreator uilc)
+    {
+        LeaderboardCreator.GetLeaderboard(publicKey, ((msg) =>
+        {
+            int loopLength = (msg.Length < uilc.GetSize()) ? msg.Length : uilc.GetSize();
+            for (int i = 0; i < loopLength; i++)
+            {
+                uilc.SetLeaderboardElement(i, msg[i].Username, msg[i].Score, msg[i].Extra);
+            }
+        }));
+    }
+
     public void AddNewEntry(string username, int height, int time)
     {
-        LeaderboardCreator.UploadNewEntry(publicKey, username, height, ((msg) =>
+        LeaderboardCreator.UploadNewEntry(publicKey, username, height, time.ToString(), ((msg) =>
         {
             GetLeaderboard();
         }));
