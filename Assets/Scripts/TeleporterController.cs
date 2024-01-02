@@ -86,7 +86,12 @@ public class TeleporterController : MonoBehaviour
     {
         //if (collision.collider.tag != "player")
         //collision.contacts[0].normal;
-
+        if (collision.collider.CompareTag("Ice"))
+        {
+            Debug.Log("touching ice");
+            rb.velocity /= 2;
+            return;
+        }
         if (collision.collider.CompareTag("GravityCollider")) return;
         
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private LeaderboardManager leaderboardManager;
+    [SerializeField] private TMP_FontAsset fontAsset;
 
     private void Awake()
     {
@@ -31,5 +33,10 @@ public class GameManager : MonoBehaviour
     public LeaderboardManager GetLeaderboardManager()
     {
         return leaderboardManager;
+    }
+
+    public TMP_FontAsset GetAlienFontAsset()
+    {
+        return fontAsset;
     }
 }
