@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1285744524}
   - component: {fileID: 1285744525}
+  - component: {fileID: 1001472881186836501}
   m_Layer: 6
   m_Name: SurroundingLight
   m_TagString: Untagged
@@ -111,6 +112,22 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &1001472881186836501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285744523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd9e29ebd73d2b468d6f0aaf0bacb5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 1285744525}
+  minIntensity: 0.45
+  maxIntensity: 0.55
+  maxChange: 0.01
 --- !u!1 &5057346219670610682
 GameObject:
   m_ObjectHideFlags: 0
