@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8465487314392747084}
   - component: {fileID: 8465487314392747085}
   m_Layer: 5
-  m_Name: Sign
+  m_Name: SignBoth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108,9 +108,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8465487314392747090}
     m_Modifications:
+    - target: {fileID: 2397534104030549504, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 350.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397534104030549504, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 45.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397534104030549504, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 58.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2397534104030549504, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2718696127053745609, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
       propertyPath: m_Name
       value: SignText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819155741091539993, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_text
+      value: You must climb to the top of the tower
       objectReference: {fileID: 0}
     - target: {fileID: 2819155741091539993, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
       propertyPath: m_fontAsset
@@ -120,6 +140,30 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 2819155741091539993, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_characterSpacing
+      value: -1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819155741091539993, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819155741091539998, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 350.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819155741091539998, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 45.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819155741091539998, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 58.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819155741091539998, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 10.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2819155741605359240, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
       propertyPath: signText
       value: 
@@ -211,6 +255,38 @@ PrefabInstance:
     - target: {fileID: 2819155741605359246, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
       propertyPath: m_Name
       value: SignText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_text
+      value: You must climb to the top of the tower
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_fontSize
+      value: 42.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 2b95197b1aa7bec4e98a4302e2d0e4fc, type: 2}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_lineSpacing
+      value: 18.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_wordSpacing
+      value: -36.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 42.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -8124783515122616304, guid: 2b95197b1aa7bec4e98a4302e2d0e4fc, type: 2}
+    - target: {fileID: 8033465447623135675, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}

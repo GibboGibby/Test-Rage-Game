@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4553910307464824265}
   - component: {fileID: 4553910307464824266}
   - component: {fileID: 2114077916769768606}
+  - component: {fileID: 4196427298736173693}
   m_Layer: 7
   m_Name: Teleporter
   m_TagString: Untagged
@@ -119,7 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 10
   rb: {fileID: 4553910307464824266}
-  bounceMultiplier: 1.25
+  bounceMultiplier: 10
+  animator: {fileID: 4196427298736173693}
   timeToReturnToNormalGravity: 1
 --- !u!50 &4553910307464824266
 Rigidbody2D:
@@ -168,7 +170,27 @@ MonoBehaviour:
   - {x: 0.50000024, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 60936
+  m_InstanceId: 209078
+--- !u!95 &4196427298736173693
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4553910307464824267}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 12cb0325d03dbef438a515cbdfe60476, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6831157188821011487
 GameObject:
   m_ObjectHideFlags: 0

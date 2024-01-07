@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class TeleporterController : MonoBehaviour
@@ -10,6 +11,7 @@ public class TeleporterController : MonoBehaviour
     [SerializeField] private float power;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float bounceMultiplier = 2;
+    [SerializeField] private Animator animator;
     private ExtraCamController extraCamController;
     [SerializeField] private float timeToReturnToNormalGravity = 3f;
     private float elapsedTime = 0;
@@ -22,6 +24,7 @@ public class TeleporterController : MonoBehaviour
         //rb = GetComponent<Rigidbody2D>();
         //extraCamController = GameObject.Find("Extra Cam").GetComponent<ExtraCamController>();
         //extraCamController.SetTeleporter(gameObject);
+        if (animator == null) GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -82,6 +85,8 @@ public class TeleporterController : MonoBehaviour
         }
     }
 
+    private Collision2D teleCollision;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //if (collision.collider.tag != "player")
@@ -103,19 +108,54 @@ public class TeleporterController : MonoBehaviour
         }
         if (collision.collider.CompareTag("ExtraBounce"))
         {
-            rb.velocity *= bounceMultiplier;
+            Vector2 bounceDir = new Vector2(0,0);
+            Vector2 dir = collision.GetContact(0).normal;
+            if (dir.x == 1) bounceDir.x = 1;
+            if (dir.x == -1) bounceDir.x = -1;
+            if (dir.y == 1) bounceDir.y = 1;
+            if (dir.y == -1) bounceDir.y = -1;
+            /*
+            //rb.velocity *= bounceMultiplier;
+            Vector3 colPoint = transform.position;
+            Vector3 dir = colPoint - collision.gameObject.transform.position;
+            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            {
+                if (dir.x > 0) // Right
+                    bounceDir = new Vector2(1, 0);
+                else // Left
+                    bounceDir = new Vector2(-1, 0);
+            }
+            else
+            {
+                if (dir.y > 0) // Up
+                    bounceDir = new Vector2(0, 1);
+                else // Down
+                    bounceDir = new Vector2(0, -1);
+            }
+            //rb.AddForce(bounceDir * bounceMultiplier);
+            //rb.AddForce(bounceDir * GameManager.Instance.GetBounceAmount());
+            */
+            rb.velocity += bounceDir * GameManager.Instance.GetBounceAmount();
         }
 
         if (bounces == 0)
         {
-            player.Teleport(collision.contacts[0].point, collision.contacts[0].normal);
-            //player.CanFire(true);
-            player.StartCooldown();
-            //extraCamController.UnsetTeleporter();
-            Destroy(this.gameObject);
+            GetComponent<Animator>().Play("Explode");
+            teleCollision = collision;
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
         }
             
 
         bounces--;
+    }
+
+    public void TeleporterLanded()
+    {
+        player.Teleport(teleCollision.contacts[0].point, teleCollision.contacts[0].normal);
+        //player.CanFire(true);
+        player.StartCooldown();
+        //extraCamController.UnsetTeleporter();
+        Destroy(this.gameObject);
     }
 }

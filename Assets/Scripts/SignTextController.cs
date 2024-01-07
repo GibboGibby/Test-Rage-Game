@@ -16,6 +16,8 @@ public class SignTextController : MonoBehaviour
     [SerializeField] private float timeBetweenLetters;
     [SerializeField] private float timeBetweenFonts;
 
+    [SerializeField] private bool SingleTextTyping;
+
     private bool startedCoroutine = false;
 
     private IEnumerator mainCoroutine;
@@ -26,6 +28,7 @@ public class SignTextController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SingleTextTyping) signText.gameObject.SetActive(false);
         //signText = Instantiate(mainText.gameObject, transform).GetComponent<TextMeshProUGUI>();
         //signText.transform.localPosition = signParent.localPosition;
         //signText.font = GameManager.Instance.GetAlienFontAsset();
@@ -124,7 +127,10 @@ public class SignTextController : MonoBehaviour
         if (!startedCoroutine)
         {
             startedCoroutine = true;
-            mainCoroutine = MainCoroutine(timeBetweenFonts, timeBetweenLetters, mainText, signText);
+            if (SingleTextTyping)
+                mainCoroutine = ChangeAlphaOneLetterAtATime(timeBetweenLetters, mainText, 255);
+            else
+                mainCoroutine = MainCoroutine(timeBetweenFonts, timeBetweenLetters, mainText, signText);
             StartCoroutine(mainCoroutine);
         }
     }

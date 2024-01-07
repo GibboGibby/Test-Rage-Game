@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private LeaderboardManager leaderboardManager;
     [SerializeField] private TMP_FontAsset fontAsset;
+    [SerializeField] private float bounceBlockAmount;
 
     private void Awake()
     {
@@ -38,5 +39,10 @@ public class GameManager : MonoBehaviour
     public TMP_FontAsset GetAlienFontAsset()
     {
         return fontAsset;
+    }
+
+    public float GetBounceAmount()
+    {
+        return bounceBlockAmount;
     }
 }
