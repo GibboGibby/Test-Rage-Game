@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 5057346219670610624}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,15 +283,28 @@ MonoBehaviour:
   ecc: {fileID: 0}
   sr: {fileID: 5057346219670610629}
   lr: {fileID: 5057346219670610624}
+  bc2d: {fileID: 0}
+  animator: {fileID: 0}
+  teleportCollisionScale: 1.8
+  arm: {fileID: 0}
+  armRotPoint: {fileID: 0}
+  armEndPoint: {fileID: 0}
   minPower: 2
   maxPower: 10
   maxDistForFullPower: 3
   lineSteps: 5
   debugTeleportPos: {fileID: 0}
+  throwingArm: {fileID: 0}
   cooldownTime: 0.5
   teleporterPrefab: {fileID: 4553910307464824267, guid: 988dd9e2ea1f9cf4caff48e15b01644d, type: 3}
   uiController: {fileID: 0}
   shootForce: 10
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  idle: {fileID: 0}
+  walk: {fileID: 0}
+  throwing: {fileID: 0}
 --- !u!120 &5057346219670610624
 LineRenderer:
   m_ObjectHideFlags: 0

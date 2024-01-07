@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -42,6 +43,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private UIController uiController;
 
     [SerializeField] private float shootForce = 10.0f;
+
+    [SerializeField] private LayerMask groundLayer;
 
     [Header("Animations")]
     [SerializeField] private AnimationClip idle;
@@ -109,6 +112,7 @@ public class PlayerController : MonoBehaviour
         bc2d.offset = (direction == 1) ? new Vector2(boxColliderXOffset, bc2d.offset.y) : new Vector2(-boxColliderXOffset, bc2d.offset.y);
         animator.SetBool("moving", moving);
     }
+    private bool shouldCheckGrounded = false;
 
 
     public void Teleport(Vector2 pos, Vector2 normal)
@@ -119,6 +123,14 @@ public class PlayerController : MonoBehaviour
         //Vector2 scale = new Vector2(sr.bounds.size.x / 2, sr.bounds.size.y / 2);
         Vector2 movementAmt = normal * scale;
         transform.position = pos + movementAmt;
+        canFire = false;
+        StartCoroutine(ChangeToCheckGrounded());
+    }
+
+    private IEnumerator ChangeToCheckGrounded ()
+    {
+        yield return new WaitForEndOfFrame();
+        shouldCheckGrounded = true;
     }
 
     private void Fire()
@@ -230,12 +242,32 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckGrounded();
         Movement();
         UpdateBounce();
         Shooting();
         uiController.UpdateUI(bounces);
 
         if (Input.GetKeyDown(KeyCode.T)) transform.position = debugTeleportPos.transform.position;
+    }
+
+    private void CheckGrounded()
+    {
+        //if (!canFire && !shouldCheckGrounded) return;
+        //if (canFire) return;
+        //if (!shouldCheckGrounded) return;
+
+        float dist = bc2d.size.y / 2;
+        Vector2 down = transform.TransformDirection(Vector2.down);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, down, dist, groundLayer);
+        Debug.DrawRay(hit.point, hit.normal, Color.green, 5, false);
+        //Debug.Log("Checking to see if grounded");
+        if (hit.collider != null)
+        {
+            //Debug.Log("This runs");
+            canFire = true;
+            shouldCheckGrounded = false;
+        }
     }
 
     Vector2 PointPosition(float t, Vector2 dir)

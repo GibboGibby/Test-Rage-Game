@@ -154,7 +154,7 @@ public class TeleporterController : MonoBehaviour
     {
         player.Teleport(teleCollision.contacts[0].point, teleCollision.contacts[0].normal);
         //player.CanFire(true);
-        player.StartCooldown();
+        //player.StartCooldown();
         //extraCamController.UnsetTeleporter();
         Destroy(this.gameObject);
     }
