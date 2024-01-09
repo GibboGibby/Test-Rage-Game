@@ -260,6 +260,9 @@ public class PlayerController : MonoBehaviour
         float dist = bc2d.size.y / 2;
         Vector2 down = transform.TransformDirection(Vector2.down);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, down, dist, groundLayer);
+
+        if (hit.collider.CompareTag("Ice") || hit.collider.CompareTag("GravityCollider") || hit.collider.CompareTag("NoGravity") || hit.collider.CompareTag("NegativeGravity") || hit.collider.CompareTag("PositiveGravity") || hit.collider.CompareTag("Teleporter") || hit.collider.CompareTag("KillPlane")) return;
+
         Debug.DrawRay(hit.point, hit.normal, Color.green, 5, false);
         //Debug.Log("Checking to see if grounded");
         if (hit.collider != null)
