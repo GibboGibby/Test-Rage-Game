@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
     private void Fire()
     {
         //Debug.Log("Fired!");
-        GameObject teleporter = Instantiate(teleporterPrefab, transform.position, Quaternion.identity);
+        GameObject teleporter = Instantiate(teleporterPrefab, armEndPoint.position, Quaternion.identity);
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - armEndPoint.position;
         TeleporterController te = teleporter.GetComponent<TeleporterController>();
         te.SetPlayer(this);
@@ -254,8 +254,8 @@ public class PlayerController : MonoBehaviour
     private void CheckGrounded()
     {
         //if (!canFire && !shouldCheckGrounded) return;
-        //if (canFire) return;
-        //if (!shouldCheckGrounded) return;
+        if (canFire) return;
+        if (!shouldCheckGrounded) return;
 
         float dist = bc2d.size.y / 2;
         Vector2 down = transform.TransformDirection(Vector2.down);

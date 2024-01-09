@@ -7,13 +7,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5937104309270170429, guid: f08f4acf315a9e94592be1a73ab576bc, type: 3}
-      propertyPath: SingleTextTyping
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8465487314392747086, guid: f08f4acf315a9e94592be1a73ab576bc, type: 3}
       propertyPath: m_Name
-      value: Sign
+      value: SignSingular
       objectReference: {fileID: 0}
     - target: {fileID: 8465487314392747090, guid: f08f4acf315a9e94592be1a73ab576bc, type: 3}
       propertyPath: m_Pivot.x

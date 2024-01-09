@@ -168,6 +168,10 @@ PrefabInstance:
       propertyPath: signText
       value: 
       objectReference: {fileID: 1875724638201132046}
+    - target: {fileID: 2819155741605359240, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
+      propertyPath: SingleTextTyping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2819155741605359241, guid: 4de030e51bd6beb42aa23eabcaf3f9bd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

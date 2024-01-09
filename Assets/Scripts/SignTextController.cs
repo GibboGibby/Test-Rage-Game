@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Unity.PlasticSCM.Editor.WebApi;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 public class SignTextController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class SignTextController : MonoBehaviour
     [SerializeField] private Color32 activeColor = Color.white;
 
     [SerializeField] private float timeBetweenLetters;
+    [SerializeField] private float timeUntilRemove;
+    [SerializeField] private float timeBetweenLettersHiding;
     [SerializeField] private float timeBetweenFonts;
 
     [SerializeField] private bool SingleTextTyping;
@@ -108,13 +111,23 @@ public class SignTextController : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator MainCoroutine(float timeForFontToChange, float timeBetweenLetters, TextMeshProUGUI mainText, TextMeshProUGUI alienText)
+    private IEnumerator MainCoroutine(float timeForFontToChange, float timeBetweenLetters, float timeUntilRemove, float timeBetweenLettersHide, TextMeshProUGUI mainText, TextMeshProUGUI alienText)
     {
         StartCoroutine(ChangeAlphaOneLetterAtATime(timeBetweenLetters, alienText, 255));
         yield return new WaitForSeconds(timeForFontToChange);
         StartCoroutine(ChangeAlphaOneLetterAtATime(timeBetweenLetters, mainText, 255));
         StartCoroutine(ChangeAlphaOneLetterAtATime(timeBetweenLetters, alienText, 0));
+        yield return new WaitForSeconds(timeUntilRemove + (mainText.text.Count(c => !char.IsWhiteSpace(c)) * timeBetweenLetters) * 2);
+        StartCoroutine(ChangeAlphaOneLetterAtATime(timeBetweenLettersHide, mainText, 0));
         //startedCoroutine = false;
+    }
+
+    private IEnumerator ShowAndHideSingleFont(float timeUntilRemove, float timeBetweenLetters, float timeBetweenLettersHide, TextMeshProUGUI mainText)
+    {
+        StartCoroutine(ChangeAlphaOneLetterAtATime(timeBetweenLetters, mainText, 255));
+        yield return new WaitForSeconds(timeUntilRemove + mainText.text.Count(c=>!char.IsWhiteSpace(c)) * timeBetweenLetters);
+        StartCoroutine(ChangeAlphaOneLetterAtATime(timeBetweenLettersHide, mainText, 0));
+
     }
 
     // Update is called once per frame
@@ -124,13 +137,14 @@ public class SignTextController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.CompareTag("Player")) return;
         if (!startedCoroutine)
         {
             startedCoroutine = true;
             if (SingleTextTyping)
-                mainCoroutine = ChangeAlphaOneLetterAtATime(timeBetweenLetters, mainText, 255);
+                mainCoroutine = ShowAndHideSingleFont(timeUntilRemove, timeBetweenLetters, timeBetweenLettersHiding, mainText);
             else
-                mainCoroutine = MainCoroutine(timeBetweenFonts, timeBetweenLetters, mainText, signText);
+                mainCoroutine = MainCoroutine(timeBetweenFonts, timeBetweenLetters, timeUntilRemove, timeBetweenLettersHiding, mainText, signText);
             StartCoroutine(mainCoroutine);
         }
     }
