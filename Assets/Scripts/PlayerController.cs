@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -50,6 +51,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AnimationClip idle;
     [SerializeField] private AnimationClip walk;
     [SerializeField] private AnimationClip throwing;
+
+
+    [SerializeField] private float heightScalar;
+    [SerializeField] private Transform yHeightStart;
+
+    [SerializeField] private TextMeshProUGUI heightText;
+    private int height = 0;
+    private int timeElapsed = 0;
+
+
+
     private bool isWalking;
     private int direction = 1;
     private int bounces;
@@ -246,6 +258,7 @@ public class PlayerController : MonoBehaviour
         Movement();
         UpdateBounce();
         Shooting();
+        UpdateHeight();
         uiController.UpdateUI(bounces);
 
         if (Input.GetKeyDown(KeyCode.T)) transform.position = debugTeleportPos.transform.position;
@@ -260,7 +273,7 @@ public class PlayerController : MonoBehaviour
         float dist = bc2d.size.y / 2;
         Vector2 down = transform.TransformDirection(Vector2.down);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, down, dist, groundLayer);
-
+        if (hit.collider == null) return;
         if (hit.collider.CompareTag("Ice") || hit.collider.CompareTag("GravityCollider") || hit.collider.CompareTag("NoGravity") || hit.collider.CompareTag("NegativeGravity") || hit.collider.CompareTag("PositiveGravity") || hit.collider.CompareTag("Teleporter") || hit.collider.CompareTag("KillPlane")) return;
 
         Debug.DrawRay(hit.point, hit.normal, Color.green, 5, false);
@@ -270,7 +283,27 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("This runs");
             canFire = true;
             shouldCheckGrounded = false;
+            UpdateLeaderboard();
         }
+    }
+
+    private void UpdateHeight()
+    {
+        float dif = transform.position.y - yHeightStart.position.y;
+        height = (int)(Mathf.Ceil(dif * heightScalar));
+        heightText.text = height.ToString();
+    }
+
+    public void UpdateLeaderboard()
+    {
+        UpdateHeight();
+        GameManager.Instance.GetLeaderboardManager().DeleteAndUpdateLeaderboard(GameManager.Instance.GetLeaderboardManager().GetUsername(), height, TimeToString(Time.timeSinceLevelLoad));
+    }
+
+    private string TimeToString(float time)
+    {
+        //Make this function better
+        return time.ToString();
     }
 
     Vector2 PointPosition(float t, Vector2 dir)

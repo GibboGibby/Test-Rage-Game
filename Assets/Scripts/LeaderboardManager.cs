@@ -18,10 +18,21 @@ public class LeaderboardManager : MonoBehaviour
         }
         else
         {
-            string player = string.Empty;
-            player = "Player" + Random.Range(1000, 10000000).ToString();
-            PlayerPrefs.SetString(userNameKey, player);
+            TryToSetStartingName();
+            
         }
+    }
+
+    private void TryToSetStartingName()
+    {
+        string player = "Player" + Random.Range(1000, 99999999).ToString();
+        LeaderboardCreator.UploadNewEntry(publicKey, player, 0, "", ((msg) =>
+        {
+            PlayerPrefs.SetString(userNameKey, player);
+        }), (msg) =>
+        {
+            TryToSetStartingName();
+        });
     }
 
     public void GetLeaderboard()
@@ -52,17 +63,43 @@ public class LeaderboardManager : MonoBehaviour
         }));
     }
 
-    public void ChangeName(string name)
+    public void ChangeName(string name, PauseController pc)
     {
-        //string oldName = PlayerPrefs.GetString(userNameKey);
-        PlayerPrefs.SetString(userNameKey, name);
-        LeaderboardCreator.UpdateEntryUsername(publicKey, name);
+        StartCoroutine(ChangeNameCoroutine(name, pc));
+        //if (PlayerPrefs.GetString(userNameKey) == name) return true;
     }
 
-    int height = 0;
+    private IEnumerator ChangeNameCoroutine(string name, PauseController pc)
+    {
+        int code = 0;
+        LeaderboardCreator.UpdateEntryUsername(publicKey, name, (msg) =>
+        {
+            code = 1;
+        }, (msg) =>
+        {
+            code = -1;
+        });
+
+        yield return new WaitWhile(() => code == 0);
+
+        if (code == 1) 
+        {
+            PlayerPrefs.SetString(userNameKey, name);
+            pc.NameChangedSuccessfully();
+        }
+        else
+        {
+            pc.NameChangeFailed();
+        }
+
+    }
+
+
+    //int height = 0;
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.B))
         {
             AddNewEntry(PlayerPrefs.GetString(userNameKey), height, 0);
@@ -72,5 +109,35 @@ public class LeaderboardManager : MonoBehaviour
         {
             ChangeName("Jame");
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LeaderboardCreator.DeleteEntry(publicKey);
+        }
+        */
+    }
+
+    public void DeleteAndUpdateLeaderboard(string username, int height, string time)
+    {
+        //StartCoroutine(DeleteAndReAddCoroutine(username, height, time));
+        LeaderboardCreator.DeleteEntry(publicKey, ((msg) =>
+        {
+            LeaderboardCreator.UploadNewEntry(publicKey, username, height, time);
+        }));
+    }
+
+    private IEnumerator DeleteAndReAddCoroutine(string username, int height, string time)
+    {
+        LeaderboardCreator.UploadNewEntry(publicKey, username, height, time);
+        yield return new WaitForSeconds(1.0f);
+        LeaderboardCreator.DeleteEntry(publicKey);
+
+        yield return new WaitForSeconds(1.0f);
+        LeaderboardCreator.UploadNewEntry(publicKey, username, height, time);
+    }
+
+    public string GetUsername()
+    {
+        return PlayerPrefs.GetString(userNameKey);
     }
 }
